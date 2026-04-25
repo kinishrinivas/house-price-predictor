@@ -2,7 +2,7 @@ import os
 from flask import Flask, request, render_template
 import pickle
 import numpy as np
-from param import output
+
 
 app = Flask(__name__)
 
