@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>House Price Predictor</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 420px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-size: 14px;
+            display: block;
+            text-align: left;
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 12px;
+            margin-top: 15px;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 95%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #5a67d8;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🏠 House Price Predictor</h1>
+
+    <form action="/predict" method="post">
+
+        <label>Living Area (sq ft)</label>
+        <input type="number" name="GrLivArea"
+               value="{{ form_data.GrLivArea if form_data else '' }}" required>
+
+        <label>Overall Quality (1–10)</label>
+        <input type="number" name="OverallQual"
+               value="{{ form_data.OverallQual if form_data else '' }}" required>
+
+        <label>Garage Cars</label>
+        <input type="number" name="GarageCars"
+               value="{{ form_data.GarageCars if form_data else '' }}" required>
+
+        <label>Garage Area</label>
+        <input type="number" name="GarageArea"
+               value="{{ form_data.GarageArea if form_data else '' }}" required>
+
+        <label>Basement Area</label>
+        <input type="number" name="TotalBsmtSF"
+               value="{{ form_data.TotalBsmtSF if form_data else '' }}" required>
+
+        <label>1st Floor Area</label>
+        <input type="number" name="1stFlrSF"
+               value="{{ form_data['1stFlrSF'] if form_data else '' }}" required>
+
+        <label>Full Bathrooms</label>
+        <input type="number" name="FullBath"
+               value="{{ form_data.FullBath if form_data else '' }}" required>
+
+        <button type="submit">Predict Price</button>
+
+    </form>
+
+    {% if prediction_text %}
+        <div class="result 
+            {% if '❌' in prediction_text %}error{% else %}success{% endif %}">
+            {{ prediction_text | safe }}
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
